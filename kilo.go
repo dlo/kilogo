@@ -58,7 +58,7 @@ type editorConfig struct {
 	filename       int        /* Currently open filename */
 	statusmsg      [80]string
 	statusmsg_time string
-	syntax         *EditorSyntax /* Current syntax highlight, or NULL. */
+	syntax  *EditorSyntax /* Current syntax highlight, or NULL. */
 }
 
 type KEY_ACTION = uint16
@@ -67,6 +67,7 @@ const (
 	KEY_NULL  = 0   /* NULL */
 	CTRL_C    = 3   /* Ctrl-c */
 	CTRL_D    = 4   /* Ctrl-d */
+
 	CTRL_F    = 6   /* Ctrl-f */
 	CTRL_H    = 8   /* Ctrl-h */
 	TAB       = 9   /* Tab */
