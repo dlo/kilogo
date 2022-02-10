@@ -6,20 +6,20 @@ const KILO_VERSION string = "0.0.1"
 
 /* Syntax highlight types */
 const (
-	HL_NORMAL = iota
-	HL_NONPRINT
-	HL_COMMENT   /* Single line comment. */
-	HL_MLCOMMENT /* Multi-line comment. */
-	HL_KEYWORD1
-	HL_KEYWORD2
-	HL_STRING
-	HL_NUMBER
-	HL_MATCH /* Search match. */
+	HlNormal = iota
+	HlNonprint
+	HlComment   /* Single line comment. */
+	HlMlcomment /* Multi-line comment. */
+	HlKeyword1
+	HlKeyword2
+	HlString
+	HlNumber
+	HlMatch /* Search match. */
 )
 
 const (
-	HL_HIGHLIGHT_STRINGS = iota + 1
-	HL_HIGHLIGHT_NUMBERS
+	HlHighlightStrings = iota + 1
+	HlHighlightNumbers
 )
 
 type EditorSyntax struct {
@@ -66,37 +66,52 @@ type editorConfig struct {
 type KEY_ACTION = uint16
 
 const (
-	KEY_NULL = 0 /* NULL */
-	CTRL_C   = 3 /* Ctrl-c */
-	CTRL_D   = 4 /* Ctrl-d */
+	KeyNull = 0 /* NULL */
+	CtrlC   = 3 /* Ctrl-c */
+	CtrlD   = 4 /* Ctrl-d */
 
-	CTRL_F    = 6   /* Ctrl-f */
-	CTRL_H    = 8   /* Ctrl-h */
-	TAB       = 9   /* Tab */
-	CTRL_L    = 12  /* Ctrl+l */
-	ENTER     = 13  /* Enter */
-	CTRL_Q    = 17  /* Ctrl-q */
-	CTRL_S    = 19  /* Ctrl-s */
-	CTRL_U    = 21  /* Ctrl-u */
-	ESC       = 27  /* Escape */
-	BACKSPACE = 127 /* Backspace */
+	CtrlF     = 6   /* Ctrl-f */
+	CtrlH     = 8   /* Ctrl-h */
+	Tab       = 9   /* Tab */
+	CtrlL     = 12  /* Ctrl+l */
+	Enter     = 13  /* Enter */
+	CtrlQ     = 17  /* Ctrl-q */
+	CtrlS     = 19  /* Ctrl-s */
+	CtrlU     = 21  /* Ctrl-u */
+	Esc       = 27  /* Escape */
+	Backspace = 127 /* Backspace */
 	/* The following are just soft codes not really reported by the
 	 * terminal directly. */
-	ARROW_LEFT = 1000
-	ARROW_RIGHT
-	ARROW_UP
-	ARROW_DOWN
-	DEL_KEY
-	HOME_KEY
-	END_KEY
-	PAGE_UP
-	PAGE_DOWN
+
+	ArrowLeft = 1000
+	ArrowRight
+	ArrowUp
+	ArrowDown
+	DelKey
+	HomeKey
+	EndKey
+	PageUp
+	PageDown
 )
 
 type Kilo interface {
 	editorSetStatusMessage(fmt string)
 }
 
+type HighlightDatabase struct {
+	extensions []string
+	keywords   []string
+	comments   []string
+	flags      int
+}
+
+var HLDB = HighlightDatabase{
+	CLanguage{}.GetHLKeywords(),
+	CLanguage{}.GetHLExtensions(),
+	[]string{"//", "/*", "*/"},
+	HlHighlightNumbers | HlHighlightNumbers,
+}
+
 func main() {
-	fmt.Printf("%s", _POSIX_C_SOURCE)
+	fmt.Printf("%s", CLanguage{}.GetHLExtensions())
 }
